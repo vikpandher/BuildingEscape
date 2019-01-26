@@ -39,14 +39,15 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	AActor* Owner;
+	// The owning door
+	AActor* Owner = nullptr;
 
 	/// UPROPERTY(VisibleAnywhere)
 	UPROPERTY(EditAnywhere)
 	float OpenAngle = 90.f ;
 
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* PressurePlate;
+	ATriggerVolume* PressurePlate = nullptr;
 
 	UPROPERTY(EditAnywhere)
 	float DoorCloseDelay = 1.f;

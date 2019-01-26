@@ -26,6 +26,11 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	
+	if (!PhysicsHandle)
+	{
+		return;
+	}
+
 	/// if the physics handle is attached
 	if (PhysicsHandle->GrabbedComponent)
 	{
@@ -117,6 +122,11 @@ FVector UGrabber::GetReachLineEnd() const
 
 void UGrabber::Grab()
 {
+	if (!PhysicsHandle)
+	{
+		return;
+	}
+	
 	///UE_LOG(LogTemp, Warning, TEXT("Grab pressed"))
 
 	/// LINE TRACE and see if we reach and actors with physics body collision channel set
@@ -147,6 +157,11 @@ void UGrabber::Grab()
 
 void UGrabber::Release()
 {
+	if (!PhysicsHandle)
+	{
+		return;
+	}
+	
 	///UE_LOG(LogTemp, Warning, TEXT("Grab released"))
 
 	PhysicsHandle->ReleaseComponent();
