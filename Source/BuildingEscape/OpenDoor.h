@@ -9,8 +9,12 @@
 #include "GameFramework/Actor.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/PlayerController.h"
+#include "Components/PrimitiveComponent.h"
 #include "OpenDoor.generated.h"
 
+
+
+#define OUT
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -49,8 +53,8 @@ private:
 
 	float LastDoorOpenTime;
 
-	// Note: Remember pawn inherits from actor
+	/// Note: Remember pawn inherits from actor
 
-	/// UPROPERTY(EditAnywhere)
-	AActor* ActorThatOpens;
+	// Returns total mass in kg
+	float GetTotalMassOfActorsOnPlate() const;
 };
