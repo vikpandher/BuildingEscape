@@ -7,11 +7,9 @@
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
+	/// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
+	/// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
 
@@ -19,34 +17,11 @@ UOpenDoor::UOpenDoor()
 void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// Find the owning Actor
 	Owner = GetOwner();
-
 	if (!PressurePlate)
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s missing pressure plate"), *GetOwner()->GetName())
 	}
-}
-
-
-void UOpenDoor::OpenDoor()
-{
-	// Create a rotator
-	FRotator NewRotation = FRotator(0.f, OpenAngle, 0.f);
-
-	// Set the door rotation
-	Owner->SetActorRotation(NewRotation);
-}
-
-
-void UOpenDoor::CloseDoor()
-{
-	// Create a rotator
-	FRotator NewRotation = FRotator(0.f, 0.f, 0.f);
-
-	// Set the door rotation
-	Owner->SetActorRotation(NewRotation);
 }
 
 
@@ -56,16 +31,13 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// Poll the Trigger Volume
-	if (GetTotalMassOfActorsOnPlate() > 30.f) // TODO make into a parameter
+	if (GetTotalMassOfActorsOnPlate() > TriggerMass)
 	{
-		OpenDoor();
-		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+		OnOpen.Broadcast();
 	}
-
-	// Check if it's time to close the door
-	if (GetWorld()->GetTimeSeconds() - LastDoorOpenTime > DoorCloseDelay)
+	else
 	{
-		CloseDoor();
+		OnClose.Broadcast();
 	}
 }
 
